@@ -8,11 +8,12 @@ import {
   FormControl,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "./schemaProduct/schemaProduct";
-import { IFormInputs, ICharacter } from "../../types/dataType";
-import { addItem } from "../../feature/data/dataSlice";
 import { useDispatch } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchema } from "./yupSchemaProduct/schemaProduct";
+import { addItem } from "../../feature/data/dataSlice";
+import { IFormInputs, ICharacter } from "../../types/dataType";
+import BackButton from "../ui/BackButton/BackButton";
 
 function ProductCreate() {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ function ProductCreate() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <BackButton />
       <Box
         display="grid"
         gap={3}

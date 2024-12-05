@@ -7,15 +7,12 @@ import {
   CardMedia,
   Typography,
   Box,
-  Button,
 } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import BackButton from "../ui/BackButton/BackButton";
 
 function ProductDetail() {
   const { id } = useParams();
   const { items } = useSelector((state: RootState) => state.data);
-  const navigate = useNavigate();
 
   const product = items.find((item) => item.id === Number(id));
 
@@ -74,15 +71,7 @@ function ProductDetail() {
           >
             <strong>Location:</strong> {product.location.name}
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ marginTop: 2 }}
-            onClick={() => navigate("/products")}
-            startIcon={<ArrowBack />}
-          >
-            Back to Products
-          </Button>
+          <BackButton />
         </CardContent>
       </Card>
     </Box>
