@@ -43,9 +43,11 @@ const dataSlice = createSlice({
       action: PayloadAction<{ id: number; liked: boolean }>
     ) => {
       const { id, liked } = action.payload;
-      const item = state.items.find((item) => item.id === id);
+      const index = state.items.findIndex((item) => item.id === id);
 
-      if (item) item.liked = liked;
+      if (index !== -1) {
+        state.items[index].liked = liked;
+      }
     },
   },
   extraReducers: (builder) => {

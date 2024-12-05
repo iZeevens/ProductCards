@@ -17,7 +17,7 @@ const ProductItem = memo(({ item }: { item: ICharacter }) => {
         boxShadow: 3,
         cursor: "pointer",
         "&:hover": {
-          transform: "scale(1.05)",
+          transform: "scale(1.05)", 
           transition: "transform 0.3s ease-in-out",
         },
       }}

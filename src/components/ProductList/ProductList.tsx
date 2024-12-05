@@ -35,14 +35,9 @@ function ProductList() {
       : filteredBySearch;
   }, [items, searchTerm, filter]);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "failed") {
-    return <div>Failed to load data. Please try again later.</div>;
-  }
-
+  if (status === "loading") return <div>Loading...</div>;
+  if (status === "failed") return <div>Failed to load data. Please try again later.</div>;
+  
   return (
     <Box
       sx={{
