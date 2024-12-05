@@ -35,11 +35,17 @@ const dataSlice = createSlice({
     addItem: (state, action: PayloadAction<ICharacter>) => {
       state.items.push(action.payload);
     },
-    setItems: (state, action) => {
-      state.items = action.payload;
+    deleteItem: (state, action: PayloadAction<{ id: number }>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
     },
-    clearItems: (state) => {
-      state.items = [];
+    updateItemLikeStatus: (
+      state,
+      action: PayloadAction<{ id: number; liked: boolean }>
+    ) => {
+      const { id, liked } = action.payload;
+      const item = state.items.find((item) => item.id === id);
+
+      if (item) item.liked = liked;
     },
   },
   extraReducers: (builder) => {
@@ -60,5 +66,5 @@ const dataSlice = createSlice({
   },
 });
 
-export const { addItem, setItems, clearItems } = dataSlice.actions;
+export const { addItem, deleteItem, updateItemLikeStatus } = dataSlice.actions;
 export default dataSlice.reducer;

@@ -6,22 +6,16 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-import { FavoriteBorder, Delete } from "@mui/icons-material";
-import { fetchItems } from "../../feature/data/dataSlice";
-import { useEffect } from "react";
+import { Favorite, FavoriteBorder, Delete } from "@mui/icons-material";
+import { updateItemLikeStatus, deleteItem } from "../../feature/data/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState, AppDispatch } from "../../store/store";
-// import ProductDetail from "../ProductDetail/ProductDetail";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { status, items } = useSelector((state: RootState) => state.data);
-
-  useEffect(() => {
-    dispatch(fetchItems());
-  }, [dispatch]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -31,8 +25,18 @@ function ProductList() {
     return <div>Failed to load data. Please try again later.</div>;
   }
 
-  const handleIconClick = (event: React.MouseEvent) => {
+  const handleLikeClick = (
+    event: React.MouseEvent,
+    id: number,
+    liked: boolean
+  ) => {
     event.stopPropagation();
+    dispatch(updateItemLikeStatus({ id, liked: !liked }));
+  };
+
+  const handleDeleteClick = (event: React.MouseEvent, id: number) => {
+    event.stopPropagation();
+    dispatch(deleteItem({ id }));
   };
 
   return (
@@ -82,10 +86,18 @@ function ProductList() {
                 marginTop: 2,
               }}
             >
-              <IconButton sx={{ color: "red" }} onClick={handleIconClick}>
-                <FavoriteBorder />
+              <IconButton
+                sx={{ color: "red" }}
+                onClick={(e) =>
+                  handleLikeClick(e, item.id, item.liked || false)
+                }
+              >
+                {item.liked ? <Favorite /> : <FavoriteBorder />}
               </IconButton>
-              <IconButton sx={{ color: "grey" }} onClick={handleIconClick}>
+              <IconButton
+                sx={{ color: "grey" }}
+                onClick={(e) => handleDeleteClick(e, item.id)}
+              >
                 <Delete />
               </IconButton>
             </Box>

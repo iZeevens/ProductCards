@@ -21,6 +21,7 @@ interface ICharacter {
   episode: string[];
   url: string;
   created: string;
+  liked?: boolean;
 }
 
 export type { ICharacter };
