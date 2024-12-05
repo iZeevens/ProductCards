@@ -28,7 +28,7 @@ interface ICharacter extends ICharacterBase {
 }
 
 interface IFormInputs extends ICharacterBase {
-  origin: string; // строки, так как пользователь вводит текст
+  origin: string;
   location: string;
 }
 
