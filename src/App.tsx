@@ -7,18 +7,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useEffect } from "react";
-import { AppDispatch } from "./store/store";
-import { fetchItems } from "./feature/data/dataSlice";
-import { useDispatch } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(fetchItems());
-  }, [dispatch]);
-
   return (
     <Router>
       <div className="App">

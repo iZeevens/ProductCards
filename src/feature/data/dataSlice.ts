@@ -13,11 +13,11 @@ const initialState: ItemState = {
 
 export const fetchItems = createAsyncThunk<
   ICharacter[],
-  void,
+  number,
   { rejectValue: string }
->("data/fetchItems", async (_, { rejectWithValue }) => {
+>("data/fetchItems", async (page, { rejectWithValue }) => {
   try {
-    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }

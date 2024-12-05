@@ -1,9 +1,12 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Box, SelectChangeEvent, Fab } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 import { Add } from "@mui/icons-material"; 
 import { RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
+import { fetchItems } from "../../feature/data/dataSlice";
 import ProductSearch from "./ProductSearch/ProductSearch";
 import ProductFilter from "./ProductFilter/ProductFilter";
 import ProductItem from "./ProductItem/ProductItem";
@@ -13,6 +16,13 @@ function ProductList() {
   const [filter, setFilter] = useState<"all" | "liked">("all");
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate(); 
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchItems(0));
+    }
+  }, [dispatch, items]);
 
   const handleSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
