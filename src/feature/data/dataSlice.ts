@@ -1,28 +1,30 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { ICharacter } from "../../types/dataType";
-
-interface ItemState {
-  items: ICharacter[];
-  status: "idle" | "loading" | "succeeded" | "failed";
-}
+import { ItemState, IFetchResult } from "./type/dataSliceTypes";
 
 const initialState: ItemState = {
+  info: {
+    pages: 0,
+    count: 0,
+  },
   items: [],
   status: "idle",
 };
 
 export const fetchItems = createAsyncThunk<
-  ICharacter[],
+  IFetchResult,
   number,
   { rejectValue: string }
 >("data/fetchItems", async (page, { rejectWithValue }) => {
   try {
-    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${page}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (error) {
     return rejectWithValue(`Failed to fetch data: ${error}`);
   }
@@ -47,6 +49,21 @@ const dataSlice = createSlice({
 
       if (index !== -1) {
         state.items[index].liked = liked;
+
+        const likedItems = JSON.parse(localStorage.getItem("liked") || "[]");
+
+        if (liked) {
+          likedItems.push(state.items[index]);
+        } else {
+          const itemIndex = likedItems.findIndex(
+            (item: ICharacter) => item.id === id
+          );
+          if (itemIndex !== -1) {
+            likedItems.splice(itemIndex, 1);
+          }
+        }
+
+        localStorage.setItem("liked", JSON.stringify(likedItems));
       }
     },
   },
@@ -57,9 +74,22 @@ const dataSlice = createSlice({
       })
       .addCase(
         fetchItems.fulfilled,
-        (state, action: PayloadAction<ICharacter[]>) => {
+        (state, action: PayloadAction<IFetchResult>) => {
           state.status = "succeeded";
-          state.items = action.payload;
+          state.items = action.payload.results;
+          state.info = action.payload.info;
+
+          const likedItems = JSON.parse(localStorage.getItem("liked") || "[]");
+          if (likedItems.length > 0) {
+            state.items.forEach((item) => {
+              const likedItem = likedItems.find(
+                (liked: { id: number }) => liked.id === item.id
+              );
+              if (likedItem) {
+                item.liked = true;
+              }
+            });
+          }
         }
       )
       .addCase(fetchItems.rejected, (state) => {
