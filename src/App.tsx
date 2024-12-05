@@ -1,5 +1,6 @@
 import ProductList from "./components/ProductList/ProductList";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import ProductCreate from "./components/ProductCreate/ProductCreate";
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,9 +23,10 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/" element={<Navigate to="/products" />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/" element={<Navigate to="/products" />} />
+          <Route path="/create-product" element={<ProductCreate />}/>
         </Routes>
       </div>
     </Router>
