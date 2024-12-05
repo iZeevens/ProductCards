@@ -23,7 +23,7 @@ function ProductList() {
       }}
     >
       {items.map((item) => (
-        <ProductItem item={item} />
+        <ProductItem key={item.name} item={item} />
       ))}
     </Box>
   );

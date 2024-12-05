@@ -1,39 +1,12 @@
 import { memo } from "react";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  IconButton,
-  Box,
-} from "@mui/material";
-import { Favorite, FavoriteBorder, Delete } from "@mui/icons-material";
-import {
-  updateItemLikeStatus,
-  deleteItem,
-} from "../../../feature/data/dataSlice";
+import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store/store";
 import { ICharacter } from "../../../types/dataType";
+import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
 const ProductItem = memo(({ item }: { item: ICharacter }) => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
-  const handleLikeClick = (
-    event: React.MouseEvent,
-    id: number,
-    liked: boolean
-  ) => {
-    event.stopPropagation();
-    dispatch(updateItemLikeStatus({ id, liked: !liked }));
-  };
-
-  const handleDeleteClick = (event: React.MouseEvent, id: number) => {
-    event.stopPropagation();
-    dispatch(deleteItem({ id }));
-  };
 
   return (
     <Card
@@ -71,18 +44,8 @@ const ProductItem = memo(({ item }: { item: ICharacter }) => {
             marginTop: 2,
           }}
         >
-          <IconButton
-            sx={{ color: "red" }}
-            onClick={(e) => handleLikeClick(e, item.id, item.liked || false)}
-          >
-            {item.liked ? <Favorite /> : <FavoriteBorder />}
-          </IconButton>
-          <IconButton
-            sx={{ color: "grey" }}
-            onClick={(e) => handleDeleteClick(e, item.id)}
-          >
-            <Delete />
-          </IconButton>
+          <LikeButton id={item.id} liked={item.liked || false} />
+          <DeleteButton id={item.id} />
         </Box>
       </CardContent>
     </Card>
