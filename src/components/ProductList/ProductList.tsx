@@ -1,6 +1,8 @@
 import { useState, useMemo, useCallback } from "react";
-import { Box, SelectChangeEvent } from "@mui/material";
+import { Box, SelectChangeEvent, Fab } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { Add } from "@mui/icons-material"; 
 import { RootState } from "../../store/store";
 import ProductSearch from "./ProductSearch/ProductSearch";
 import ProductFilter from "./ProductFilter/ProductFilter";
@@ -10,6 +12,7 @@ function ProductList() {
   const { status, items } = useSelector((state: RootState) => state.data);
   const [filter, setFilter] = useState<"all" | "liked">("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate(); 
 
   const handleSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +69,18 @@ function ProductList() {
           <ProductItem key={item.id} item={item} />
         ))}
       </Box>
+
+      <Fab
+        color="primary"
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+        }}
+        onClick={() => navigate("/create-product")}
+      >
+        <Add />
+      </Fab>
     </Box>
   );
 }
