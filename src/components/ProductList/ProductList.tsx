@@ -31,6 +31,10 @@ function ProductList() {
     return <div>Failed to load data. Please try again later.</div>;
   }
 
+  const handleIconClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   return (
     <Box
       sx={{
@@ -78,10 +82,10 @@ function ProductList() {
                 marginTop: 2,
               }}
             >
-              <IconButton sx={{ color: "red" }}>
+              <IconButton sx={{ color: "red" }} onClick={handleIconClick}>
                 <FavoriteBorder />
               </IconButton>
-              <IconButton sx={{ color: "grey" }}>
+              <IconButton sx={{ color: "grey" }} onClick={handleIconClick}>
                 <Delete />
               </IconButton>
             </Box>
