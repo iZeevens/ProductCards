@@ -10,10 +10,13 @@ import { FavoriteBorder, Delete } from "@mui/icons-material";
 import { fetchItems } from "../../feature/data/dataSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState, AppDispatch } from "../../store/store";
+// import ProductDetail from "../ProductDetail/ProductDetail";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { status, items } = useSelector((state: RootState) => state.data);
 
   useEffect(() => {
@@ -43,12 +46,13 @@ function ProductList() {
             maxWidth: 345,
             borderRadius: 2,
             boxShadow: 3,
-            cursor: 'pointer',
+            cursor: "pointer",
             "&:hover": {
               transform: "scale(1.05)",
               transition: "transform 0.3s ease-in-out",
             },
           }}
+          onClick={() => navigate(`/products/${item.id}`)}
         >
           <CardMedia
             component="img"
