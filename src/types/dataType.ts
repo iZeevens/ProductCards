@@ -8,20 +8,29 @@ interface ILocation {
   url: string;
 }
 
-interface ICharacter {
-  id: number;
+interface ICharacterBase {
   name: string;
   status: "Alive" | "Dead" | "unknown";
   species: string;
-  type: string;
   gender: "Female" | "Male" | "Genderless" | "unknown";
+  image: string;
+}
+
+interface ICharacter extends ICharacterBase {
+  id: number;
+  type: string;
   origin: IOrigin;
   location: ILocation;
-  image: string;
   episode: string[];
   url: string;
   created: string;
   liked?: boolean;
 }
 
-export type { ICharacter };
+interface IFormInputs extends ICharacterBase {
+  origin: string; // строки, так как пользователь вводит текст
+  location: string;
+}
+
+
+export type { ICharacter, IFormInputs };

@@ -6,11 +6,17 @@ const validationSchema = yup.object({
     .string()
     .min(3, "Name must be at least 3 characters")
     .required("Name is required"),
-  gender: yup.string().required("Gender is required"),
-  origin: yup.string().default(''),
-  location: yup.string().default(''),
-  species: yup.string().default(''),
-  status: yup.string().default(''),
+  gender: yup
+    .string()
+    .oneOf(["Female", "Male", "Genderless", "unknown"], "Invalid gender")
+    .default("unknown"),
+  origin: yup.string().default(""),
+  location: yup.string().default(""),
+  species: yup.string().default(""),
+  status: yup
+    .string()
+    .oneOf(["Alive", "Dead", "unknown"], "Invalid status")
+    .default("unknown"),
 });
 
 export { validationSchema };
