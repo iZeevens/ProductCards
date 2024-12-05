@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Box, SelectChangeEvent } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -11,13 +11,19 @@ function ProductList() {
   const [filter, setFilter] = useState<"all" | "liked">("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
+  const handleSearchChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(event.target.value);
+    },
+    []
+  );
 
-  const handleFilterChange = (event: SelectChangeEvent<"all" | "liked">) => {
-    setFilter(event.target.value as "all" | "liked");
-  };
+  const handleFilterChange = useCallback(
+    (event: SelectChangeEvent<"all" | "liked">) => {
+      setFilter(event.target.value as "all" | "liked");
+    },
+    []
+  );
 
   const filteredItems = useMemo(() => {
     const filteredBySearch = items.filter((item) =>
@@ -36,7 +42,6 @@ function ProductList() {
   if (status === "failed") {
     return <div>Failed to load data. Please try again later.</div>;
   }
-
 
   return (
     <Box
@@ -63,7 +68,7 @@ function ProductList() {
         }}
       >
         {filteredItems.map((item) => (
-          <ProductItem key={item.name} item={item} />
+          <ProductItem key={item.id} item={item} />
         ))}
       </Box>
     </Box>

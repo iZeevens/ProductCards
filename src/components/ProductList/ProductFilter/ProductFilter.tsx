@@ -1,11 +1,17 @@
-import { FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
+import { memo } from "react";
 
 interface FilterProps {
   filter: "all" | "liked";
   onFilterChange: (event: SelectChangeEvent<"all" | "liked">) => void;
 }
 
-function ProductFilter({ filter, onFilterChange }: FilterProps) {
+const ProductFilter = memo(({ filter, onFilterChange }: FilterProps) => {
   return (
     <FormControl sx={{ minWidth: 120 }}>
       <Select
@@ -19,6 +25,6 @@ function ProductFilter({ filter, onFilterChange }: FilterProps) {
       </Select>
     </FormControl>
   );
-}
+});
 
 export default ProductFilter;

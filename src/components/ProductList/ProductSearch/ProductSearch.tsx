@@ -1,12 +1,12 @@
 import { Box, TextField } from "@mui/material";
+import { memo } from "react";
 
 interface SearchProps {
   searchTerm: string;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ProductSearch({ searchTerm, onSearchChange }: SearchProps) {
-
+const ProductSearch = memo(({ searchTerm, onSearchChange }: SearchProps) => {
   return (
     <Box sx={{ width: "100%", maxWidth: 600 }}>
       <TextField
@@ -18,6 +18,6 @@ function ProductSearch({ searchTerm, onSearchChange }: SearchProps) {
       />
     </Box>
   );
-}
+})
 
 export default ProductSearch;
