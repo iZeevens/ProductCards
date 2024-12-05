@@ -1,13 +1,33 @@
 import { useState, useMemo } from "react";
-import { Box } from "@mui/material";
+import { Box, SelectChangeEvent } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import ProductSearch from "./ProductSearch/ProductSearch";
+import ProductFilter from "./ProductFilter/ProductFilter";
 import ProductItem from "./ProductItem/ProductItem";
 
 function ProductList() {
   const { status, items } = useSelector((state: RootState) => state.data);
+  const [filter, setFilter] = useState<"all" | "liked">("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleFilterChange = (event: SelectChangeEvent<"all" | "liked">) => {
+    setFilter(event.target.value as "all" | "liked");
+  };
+
+  const filteredItems = useMemo(() => {
+    const filteredBySearch = items.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return filter === "liked"
+      ? filteredBySearch.filter((item) => item.liked)
+      : filteredBySearch;
+  }, [items, searchTerm, filter]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -17,13 +37,6 @@ function ProductList() {
     return <div>Failed to load data. Please try again later.</div>;
   }
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const filteredBySearch = items.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <Box
@@ -34,10 +47,13 @@ function ProductList() {
         gap: 3,
       }}
     >
-      <ProductSearch
-        searchTerm={searchTerm}
-        onSearchChange={handleSearchChange}
-      />
+      <Box>
+        <ProductSearch
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
+        />
+        <ProductFilter onFilterChange={handleFilterChange} filter={filter} />
+      </Box>
       <Box
         sx={{
           display: "grid",
@@ -46,7 +62,7 @@ function ProductList() {
           padding: 2,
         }}
       >
-        {filteredBySearch.map((item) => (
+        {filteredItems.map((item) => (
           <ProductItem key={item.name} item={item} />
         ))}
       </Box>
