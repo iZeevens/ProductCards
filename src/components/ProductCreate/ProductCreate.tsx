@@ -10,9 +10,12 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./schemaProduct/schemaProduct";
-import { IFormInputs } from "../../types/dataType";
+import { IFormInputs, ICharacter } from "../../types/dataType";
+import { addItem } from "../../feature/data/dataSlice";
+import { useDispatch } from "react-redux";
 
 function ProductCreate() {
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -22,7 +25,7 @@ function ProductCreate() {
     defaultValues: {
       status: "unknown",
       gender: "unknown",
-    }
+    },
   });
 
   const fields = [
@@ -50,7 +53,19 @@ function ProductCreate() {
   ];
 
   const onSubmit = (data: IFormInputs) => {
-    console.log(data);
+    const newCharacter: ICharacter = {
+      ...data,
+      id: Date.now(),
+      type: "",
+      origin: { name: data.origin, url: "" },
+      location: { name: data.location, url: "" },
+      episode: [],
+      url: "",
+      created: new Date().toISOString(),
+      liked: false,
+    };
+
+    dispatch(addItem(newCharacter));
   };
 
   return (
