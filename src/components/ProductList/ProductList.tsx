@@ -6,7 +6,7 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-import { Favorite, Delete } from "@mui/icons-material";
+import { FavoriteBorder, Delete } from "@mui/icons-material";
 import { fetchItems } from "../../feature/data/dataSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +43,7 @@ function ProductList() {
             maxWidth: 345,
             borderRadius: 2,
             boxShadow: 3,
+            cursor: 'pointer',
             "&:hover": {
               transform: "scale(1.05)",
               transition: "transform 0.3s ease-in-out",
@@ -74,7 +75,7 @@ function ProductList() {
               }}
             >
               <IconButton sx={{ color: "red" }}>
-                <Favorite />
+                <FavoriteBorder />
               </IconButton>
               <IconButton sx={{ color: "grey" }}>
                 <Delete />
