@@ -11,13 +11,21 @@ const initialState: ItemState = {
   status: "idle",
 };
 
-export const fetchItems = createAsyncThunk("data/fetchItems", async () => {
-  const response = await fetch("https://rickandmortyapi.com/api/character");
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
+export const fetchItems = createAsyncThunk<
+  ICharacter[],
+  void,
+  { rejectValue: string }
+>("data/fetchItems", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch("https://rickandmortyapi.com/api/character");
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    return rejectWithValue(`Failed to fetch data: ${error}`);
   }
-  const data = await response.json();
-  return data.results as ICharacter[];
 });
 
 const dataSlice = createSlice({
