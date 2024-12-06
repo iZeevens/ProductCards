@@ -13,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./yupSchemaProduct/schemaProduct";
 import { addItem } from "../../feature/data/dataSlice";
 import { IFormInputs, ICharacter } from "../../types/dataType";
+import { IFieldsType } from "./types/fieldsTypes";
 import BackButton from "../ui/BackButton/BackButton";
 
 function ProductCreate() {
@@ -36,11 +37,7 @@ function ProductCreate() {
     { name: "location", label: "Location" },
     { name: "species", label: "Species" },
   ];
-  const selectFields: Array<{
-    name: keyof IFormInputs;
-    label: string;
-    options: string[];
-  }> = [
+  const selectFields: IFieldsType[] = [
     {
       name: "gender",
       label: "Gender",
