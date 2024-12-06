@@ -2,7 +2,7 @@ import ProductList from "./components/ProductList/ProductList";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import ProductCreate from "./components/ProductCreate/ProductCreate";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Navigate,
