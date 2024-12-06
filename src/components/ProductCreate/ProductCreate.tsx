@@ -6,7 +6,9 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Snackbar,
 } from "@mui/material";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +20,7 @@ import BackButton from "../ui/BackButton/BackButton";
 
 function ProductCreate() {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
   const {
     control,
     handleSubmit,
@@ -29,6 +32,13 @@ function ProductCreate() {
       gender: "unknown",
     },
   });
+
+  const handlekSnakBar = () => {
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 3000);
+  };
 
   const fields = [
     { name: "image", label: "Image" },
@@ -64,6 +74,7 @@ function ProductCreate() {
     };
 
     dispatch(addItem(newCharacter));
+    handlekSnakBar();
   };
 
   return (
@@ -130,6 +141,13 @@ function ProductCreate() {
             )}
           </Box>
         ))}
+
+        <Snackbar
+          open={open}
+          message="Successfully added"
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+        />
 
         <Box display="flex" justifyContent="center" mt={2}>
           <Button type="submit" variant="contained" color="primary">
