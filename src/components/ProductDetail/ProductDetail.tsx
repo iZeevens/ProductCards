@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
+import useFetchProduct from "../../hooks/useFetchProduct";
 import { RootState } from "../../store/store";
 import {
   Card,
@@ -14,6 +15,7 @@ function ProductDetail() {
   const { id } = useParams();
   const { items } = useSelector((state: RootState) => state.data);
 
+  useFetchProduct()
   const product = items.find((item) => item.id === Number(id));
 
   if (!product) {
