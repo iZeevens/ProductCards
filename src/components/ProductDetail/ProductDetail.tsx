@@ -47,12 +47,13 @@ function ProductDetail() {
           {isEdit ? (
             <DetailEdit
               id={product.id}
+              image={product.image}
               name={product.name}
               species={product.species}
               status={product.status}
               gender={product.gender}
-              originName={product.origin.name}
-              locationName={product.location.name}
+              origin={product.origin.name}
+              location={product.location.name}
               handleEditClick={handleEditClick}
             />
           ) : (
