@@ -18,6 +18,27 @@ import { IFormInputs, ICharacter } from "../../types/dataType";
 import { IFieldsType } from "./types/fieldsTypes";
 import BackButton from "../ui/BackButton/BackButton";
 
+const fields = [
+  { name: "image", label: "Image" },
+  { name: "name", label: "Name" },
+  { name: "origin", label: "Origin" },
+  { name: "location", label: "Location" },
+  { name: "species", label: "Species" },
+];
+
+const selectFields: IFieldsType[] = [
+  {
+    name: "gender",
+    label: "Gender",
+    options: ["Female", "Male", "Genderless", "unknown"],
+  },
+  {
+    name: "status",
+    label: "Status",
+    options: ["Alive", "Dead", "unknown"],
+  },
+];
+
 function ProductCreate() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -39,26 +60,6 @@ function ProductCreate() {
       setOpen(false);
     }, 3000);
   };
-
-  const fields = [
-    { name: "image", label: "Image" },
-    { name: "name", label: "Name" },
-    { name: "origin", label: "Origin" },
-    { name: "location", label: "Location" },
-    { name: "species", label: "Species" },
-  ];
-  const selectFields: IFieldsType[] = [
-    {
-      name: "gender",
-      label: "Gender",
-      options: ["Female", "Male", "Genderless", "unknown"],
-    },
-    {
-      name: "status",
-      label: "Status",
-      options: ["Alive", "Dead", "unknown"],
-    },
-  ];
 
   const onSubmit = (data: IFormInputs) => {
     const newCharacter: ICharacter = {
