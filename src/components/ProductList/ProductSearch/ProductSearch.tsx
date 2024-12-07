@@ -18,6 +18,6 @@ const ProductSearch = memo(({ searchTerm, onSearchChange }: SearchProps) => {
       />
     </Box>
   );
-})
+});
 
 export default ProductSearch;

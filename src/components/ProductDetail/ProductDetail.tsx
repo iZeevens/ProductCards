@@ -1,10 +1,9 @@
-import { Card, CardMedia, CardContent, Button } from "@mui/material";
+import { Card, CardMedia, CardContent, Button, Box } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import useFetchProduct from "../../hooks/useFetchProduct";
 import { RootState } from "../../store/store";
-import { Box } from "@mui/material";
 import DetailCard from "./DetailView/DetailView";
 import DetailEdit from "./DetailEdit/DetailEdit";
 import BackButton from "../ui/BackButton/BackButton";
@@ -47,6 +46,7 @@ function ProductDetail() {
         <CardContent>
           {isEdit ? (
             <DetailEdit
+              id={product.id}
               name={product.name}
               species={product.species}
               status={product.status}

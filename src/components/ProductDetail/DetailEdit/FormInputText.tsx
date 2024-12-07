@@ -7,10 +7,7 @@ const FormInputText = ({ name, control, label }: IFormInputProps) => {
     <Controller
       name={name}
       control={control}
-      render={({
-        field: { onChange, value },
-        fieldState: { error },
-      }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
           helperText={error ? error.message : null}
           size="medium"
@@ -27,4 +24,4 @@ const FormInputText = ({ name, control, label }: IFormInputProps) => {
   );
 };
 
-export default FormInputText
+export default FormInputText;

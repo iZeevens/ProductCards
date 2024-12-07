@@ -1,26 +1,32 @@
 import { Box, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { updateItem } from "../../../feature/data/dataSlice";
 import FormInputText from "./FormInputText";
 import { IFromData } from "./types/fieldTypes";
 
 interface IDetailEditProps extends IFromData {
+  id: number;
   handleEditClick: () => void;
 }
 
 function DetailEdit({
+  id,
   name,
   species,
   status,
   gender,
   originName,
   locationName,
-  handleEditClick
+  handleEditClick,
 }: IDetailEditProps) {
+  const dipatch = useDispatch();
   const { control, handleSubmit } = useForm<IFromData>({
     defaultValues: { name, species, status, gender, originName, locationName },
   });
 
   const onSubmit = (data: IFromData) => {
+    // dipatch(updateItem({id, changes: data}));
     console.log(data);
   };
 
