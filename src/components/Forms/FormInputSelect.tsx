@@ -13,7 +13,7 @@ const FormInputSelect = ({
       name={name}
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <FormControl fullWidth>
+        <FormControl fullWidth sx={{ marginBottom: 2 }}>
           <InputLabel id={`${name}-label`}>{label}</InputLabel>
           <Select
             labelId={`${name}-label`}

@@ -2,8 +2,9 @@ import { Box, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 // import { useDispatch } from "react-redux";
 // import { updateItem } from "../../../feature/data/dataSlice";
-import FormInputText from "../../Forms/FormInputText";
 import { IFormTextInputs } from "../../../types/formsTypes";
+import FormInputText from "../../Forms/FormInputText";
+import FormInputSelect from "../../Forms/FormInputSelect";
 
 interface IDetailEditProps extends IFormTextInputs {
   id: number;
@@ -36,13 +37,23 @@ function DetailEdit({
       <Box
         sx={{
           display: "flex",
-          gap: "15px",
+          gap: 15,
         }}
       >
         <FormInputText name="species" control={control} label="Species" />
-        <FormInputText name="status" control={control} label="Status" />
+        <FormInputSelect
+          name="status"
+          control={control}
+          label="Status"
+          options={["Alive", "Dead", "unknown"]}
+        />
       </Box>
-      <FormInputText name="gender" control={control} label="Gender" />
+      <FormInputSelect
+          name="gender"
+          control={control}
+          label="Gender"
+          options={["Female", "Male", "Genderless", "unknown"]}
+        />
       <FormInputText name="origin" control={control} label="Origin" />
       <FormInputText name="location" control={control} label="Location" />
       <Box

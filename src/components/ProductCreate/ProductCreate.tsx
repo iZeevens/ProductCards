@@ -77,7 +77,7 @@ function ProductCreate() {
       <BackButton />
       <Box
         display="grid"
-        gap={3}
+        gap={1}
         sx={{
           maxWidth: 600,
           margin: "0 auto",
