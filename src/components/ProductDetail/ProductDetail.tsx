@@ -52,6 +52,7 @@ function ProductDetail() {
               gender={product.gender}
               originName={product.origin.name}
               locationName={product.location.name}
+              handleEditClick={handleEditClick}
             />
           ) : (
             <DetailCard

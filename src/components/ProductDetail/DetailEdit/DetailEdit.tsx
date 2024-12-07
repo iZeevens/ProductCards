@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import FormInputText from "./FormInputText";
 import { IFromData } from "./types/fieldTypes";
 
+interface IDetailEditProps extends IFromData {
+  handleEditClick: () => void;
+}
+
 function DetailEdit({
   name,
   species,
@@ -10,7 +14,8 @@ function DetailEdit({
   gender,
   originName,
   locationName,
-}: IFromData) {
+  handleEditClick
+}: IDetailEditProps) {
   const { control, handleSubmit } = useForm<IFromData>({
     defaultValues: { name, species, status, gender, originName, locationName },
   });
@@ -43,7 +48,7 @@ function DetailEdit({
         <Button type="submit" variant="contained" color="primary">
           Save
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleEditClick}>
           Cancel
         </Button>
       </Box>
