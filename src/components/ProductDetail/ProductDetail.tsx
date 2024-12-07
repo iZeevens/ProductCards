@@ -7,6 +7,7 @@ import { RootState } from "../../store/store";
 import { Box } from "@mui/material";
 import DetailCard from "./DetailView/DetailView";
 import DetailEdit from "./DetailEdit/DetailEdit";
+import BackButton from "../ui/BackButton/BackButton";
 
 function ProductDetail() {
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -65,17 +66,26 @@ function ProductDetail() {
               locationName={product.location.name}
             />
           )}
-          {isEdit ? (
-            ""
-          ) : (
-            <Button
-              onClick={handleEditClick}
-              variant="contained"
-              color="primary"
-            >
-              Edit
-            </Button>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+            }}
+          >
+            {isEdit ? (
+              ""
+            ) : (
+              <Button
+                onClick={handleEditClick}
+                variant="contained"
+                color="primary"
+              >
+                Edit
+              </Button>
+            )}
+            <BackButton />
+          </Box>
         </CardContent>
       </Card>
     </Box>
