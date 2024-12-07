@@ -5,6 +5,7 @@ This application provides the following features:
 - **Browse Characters**
 - **Character Details**
 - **Add New Characters**
+- **Edit Characters**
 - **Responsive Design**
 - **Search and Filter**
 
