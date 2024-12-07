@@ -32,5 +32,4 @@ interface IFormInputs extends ICharacterBase {
   location: string;
 }
 
-
 export type { ICharacter, IFormInputs };
