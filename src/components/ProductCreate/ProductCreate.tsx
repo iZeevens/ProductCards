@@ -39,6 +39,11 @@ function ProductCreate() {
   const { control, handleSubmit } = useForm<IFormTextInputs>({
     resolver: yupResolver(validationProductSchema),
     defaultValues: {
+      image: "",
+      name: "",
+      origin: "",
+      location: "",
+      species: "",
       status: "unknown",
       gender: "unknown",
     },
