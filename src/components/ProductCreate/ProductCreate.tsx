@@ -1,13 +1,9 @@
-import {
-  Box,
-  Button,
-  Snackbar,
-} from "@mui/material";
+import { Box, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "./yupSchemaProduct/schemaProduct";
+import { validationProductSchema } from "../../validation/schemaProduct";
 import { addItem } from "../../feature/data/dataSlice";
 import { ICharacter } from "../../types/dataType";
 import { IFormTextInputs } from "../../types/formsTypes";
@@ -41,7 +37,7 @@ function ProductCreate() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { control, handleSubmit } = useForm<IFormTextInputs>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationProductSchema),
     defaultValues: {
       status: "unknown",
       gender: "unknown",

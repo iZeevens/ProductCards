@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const validationSchema = yup.object({
+const validationProductSchema = yup.object({
   image: yup.string().url("Invalid URL").required("Image URL is required"),
   name: yup
     .string()
@@ -19,4 +19,4 @@ const validationSchema = yup.object({
     .default("unknown"),
 });
 
-export { validationSchema };
+export { validationProductSchema };

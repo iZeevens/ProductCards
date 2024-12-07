@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { updateItem } from "../../../feature/data/dataSlice";
 import { IFormTextInputs } from "../../../types/formsTypes";
+import { validationProductSchema } from "../../../validation/schemaProduct";
 import FormInputText from "../../Forms/FormInputText";
 import FormInputSelect from "../../Forms/FormInputSelect";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface IDetailEditProps extends IFormTextInputs {
   id: number;
@@ -13,6 +15,7 @@ interface IDetailEditProps extends IFormTextInputs {
 
 function DetailEdit({
   id,
+  image,
   name,
   species,
   status,
@@ -23,7 +26,8 @@ function DetailEdit({
 }: IDetailEditProps) {
   const dipatch = useDispatch();
   const { control, handleSubmit } = useForm<IFormTextInputs>({
-    defaultValues: { name, species, status, gender, origin, location },
+    resolver: yupResolver(validationProductSchema),
+    defaultValues: { name, image, species, status, gender, origin, location },
   });
 
   const onSubmit = (data: IFormTextInputs) => {
@@ -43,6 +47,7 @@ function DetailEdit({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <FormInputText name="image" control={control} label="Image" />
       <FormInputText name="name" control={control} label="Name" />
       <Box
         sx={{
