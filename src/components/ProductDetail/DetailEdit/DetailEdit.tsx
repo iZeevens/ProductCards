@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-// import { useDispatch } from "react-redux";
-// import { updateItem } from "../../../feature/data/dataSlice";
+import { useDispatch } from "react-redux";
+import { updateItem } from "../../../feature/data/dataSlice";
 import { IFormTextInputs } from "../../../types/formsTypes";
 import FormInputText from "../../Forms/FormInputText";
 import FormInputSelect from "../../Forms/FormInputSelect";
@@ -12,7 +12,7 @@ interface IDetailEditProps extends IFormTextInputs {
 }
 
 function DetailEdit({
-  // id,
+  id,
   name,
   species,
   status,
@@ -21,14 +21,24 @@ function DetailEdit({
   location,
   handleEditClick,
 }: IDetailEditProps) {
-  // const dipatch = useDispatch();
+  const dipatch = useDispatch();
   const { control, handleSubmit } = useForm<IFormTextInputs>({
     defaultValues: { name, species, status, gender, origin, location },
   });
 
   const onSubmit = (data: IFormTextInputs) => {
-    // dipatch(updateItem({id, changes: data}));
-    console.log(data);
+    dipatch(
+      updateItem({
+        id,
+        changes: {
+          ...data,
+          origin: { name: data.origin, url: "" },
+          location: { name: data.location, url: "" },
+        },
+      })
+    );
+
+    handleEditClick();
   };
 
   return (
@@ -49,11 +59,11 @@ function DetailEdit({
         />
       </Box>
       <FormInputSelect
-          name="gender"
-          control={control}
-          label="Gender"
-          options={["Female", "Male", "Genderless", "unknown"]}
-        />
+        name="gender"
+        control={control}
+        label="Gender"
+        options={["Female", "Male", "Genderless", "unknown"]}
+      />
       <FormInputText name="origin" control={control} label="Origin" />
       <FormInputText name="location" control={control} label="Location" />
       <Box
