@@ -1,4 +1,5 @@
-import { Card, CardMedia, CardContent } from "@mui/material";
+import { Card, CardMedia, CardContent, Button } from "@mui/material";
+import { useState } from "react";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import useFetchProduct from "../../hooks/useFetchProduct";
@@ -8,7 +9,7 @@ import DetailCard from "./DetailView/DetailView";
 import DetailEdit from "./DetailEdit/DetailEdit";
 
 function ProductDetail() {
-  const isEdit = true;
+  const [isEdit, setEdit] = useState<boolean>(false);
   const { id } = useParams();
   const { items } = useSelector((state: RootState) => state.data);
 
@@ -18,6 +19,10 @@ function ProductDetail() {
   if (!product) {
     return <div>Product not found</div>;
   }
+
+  const handleEditClick = () => {
+    setEdit((prev) => !prev);
+  };
 
   return (
     <Box
@@ -58,6 +63,17 @@ function ProductDetail() {
               originName={product.origin.name}
               locationName={product.location.name}
             />
+          )}
+          {isEdit ? (
+            ""
+          ) : (
+            <Button
+              onClick={handleEditClick}
+              variant="contained"
+              color="primary"
+            >
+              Edit
+            </Button>
           )}
         </CardContent>
       </Card>
