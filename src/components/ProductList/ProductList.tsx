@@ -3,7 +3,7 @@ import { Box, SelectChangeEvent, Fab } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import useFetchProduct from "../../hooks/useFetchProduct";
-import { Add } from "@mui/icons-material"; 
+import { Add } from "@mui/icons-material";
 import { RootState } from "../../store/store";
 import ProductSearch from "./ProductSearch/ProductSearch";
 import ProductFilter from "./ProductFilter/ProductFilter";
@@ -13,9 +13,9 @@ function ProductList() {
   const { status, items } = useSelector((state: RootState) => state.data);
   const [filter, setFilter] = useState<"all" | "liked">("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  useFetchProduct()
+  useFetchProduct();
 
   const handleSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +42,9 @@ function ProductList() {
   }, [items, searchTerm, filter]);
 
   if (status === "loading") return <div>Loading...</div>;
-  if (status === "failed") return <div>Failed to load data. Please try again later.</div>;
-  
+  if (status === "failed")
+    return <div>Failed to load data. Please try again later.</div>;
+
   return (
     <Box
       sx={{

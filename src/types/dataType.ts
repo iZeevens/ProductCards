@@ -27,10 +27,4 @@ interface ICharacter extends ICharacterBase {
   liked?: boolean;
 }
 
-interface IFormInputs extends ICharacterBase {
-  origin: string;
-  location: string;
-}
-
-
-export type { ICharacter, IFormInputs };
+export type { ICharacter, ICharacterBase };

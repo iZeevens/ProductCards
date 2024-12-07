@@ -1,33 +1,49 @@
-import {
-  TextField,
-  Box,
-  Button,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  Snackbar,
-} from "@mui/material";
+import { Box, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchema } from "./yupSchemaProduct/schemaProduct";
+import { validationProductSchema } from "../../validation/schemaProduct";
 import { addItem } from "../../feature/data/dataSlice";
-import { IFormInputs, ICharacter } from "../../types/dataType";
-import { IFieldsType } from "./types/fieldsTypes";
+import { ICharacter } from "../../types/dataType";
+import { IFormTextInputs } from "../../types/formsTypes";
+import { ITextField, ISelectField } from "./types/ProductCreate";
+import FormInputText from "../Forms/FormInputText";
+import FormInputSelect from "../Forms/FormInputSelect";
 import BackButton from "../ui/BackButton/BackButton";
+
+const fields: ITextField[] = [
+  { name: "image", label: "Image" },
+  { name: "name", label: "Name" },
+  { name: "origin", label: "Origin" },
+  { name: "location", label: "Location" },
+  { name: "species", label: "Species" },
+];
+
+const selectFields: ISelectField[] = [
+  {
+    name: "gender",
+    label: "Gender",
+    options: ["Female", "Male", "Genderless", "unknown"],
+  },
+  {
+    name: "status",
+    label: "Status",
+    options: ["Alive", "Dead", "unknown"],
+  },
+];
 
 function ProductCreate() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInputs>({
-    resolver: yupResolver(validationSchema),
+  const { control, handleSubmit } = useForm<IFormTextInputs>({
+    resolver: yupResolver(validationProductSchema),
     defaultValues: {
+      image: "",
+      name: "",
+      origin: "",
+      location: "",
+      species: "",
       status: "unknown",
       gender: "unknown",
     },
@@ -40,27 +56,7 @@ function ProductCreate() {
     }, 3000);
   };
 
-  const fields = [
-    { name: "image", label: "Image" },
-    { name: "name", label: "Name" },
-    { name: "origin", label: "Origin" },
-    { name: "location", label: "Location" },
-    { name: "species", label: "Species" },
-  ];
-  const selectFields: IFieldsType[] = [
-    {
-      name: "gender",
-      label: "Gender",
-      options: ["Female", "Male", "Genderless", "unknown"],
-    },
-    {
-      name: "status",
-      label: "Status",
-      options: ["Alive", "Dead", "unknown"],
-    },
-  ];
-
-  const onSubmit = (data: IFormInputs) => {
+  const onSubmit = (data: IFormTextInputs) => {
     const newCharacter: ICharacter = {
       ...data,
       id: Date.now(),
@@ -82,7 +78,7 @@ function ProductCreate() {
       <BackButton />
       <Box
         display="grid"
-        gap={3}
+        gap={1}
         sx={{
           maxWidth: 600,
           margin: "0 auto",
@@ -91,54 +87,22 @@ function ProductCreate() {
       >
         {fields.map((field) => (
           <Box key={field.name}>
-            <Controller
-              name={field.name as keyof IFormInputs}
+            <FormInputText
+              name={field.name}
               control={control}
-              defaultValue=""
-              render={({ field: controllerField }) => (
-                <TextField
-                  {...controllerField}
-                  label={field.label}
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors[field.name as keyof IFormInputs]}
-                  helperText={errors[field.name as keyof IFormInputs]?.message}
-                />
-              )}
+              label={field.label}
             />
           </Box>
         ))}
 
         {selectFields.map((field) => (
           <Box key={field.name}>
-            <Controller
+            <FormInputSelect
               name={field.name}
               control={control}
-              render={({ field: { onChange, value } }) => (
-                <FormControl fullWidth>
-                  <InputLabel id={`${field.name}-label`}>
-                    {field.label}
-                  </InputLabel>
-                  <Select
-                    labelId={`${field.name}-label`}
-                    value={value}
-                    onChange={onChange}
-                    error={!!errors[field.name]}
-                  >
-                    {field.options.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
+              options={field.options}
+              label={field.label}
             />
-            {errors[field.name] && (
-              <Box color="error.main" mt={1}>
-                {errors[field.name]?.message}
-              </Box>
-            )}
           </Box>
         ))}
 
